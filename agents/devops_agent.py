@@ -40,6 +40,12 @@ class DevOpsAgent:
             )
         )
 
+        workflow_context = (
+            self.tool_service.get_workflow_runs(
+                "enterprise-ai-agent-platform"
+            )
+        )
+
         return {
             "agent": "DevOps Agent",
             "response": self.openai_service.generate_response(
@@ -54,6 +60,9 @@ class DevOpsAgent:
 
                     "Open Pull Requests:\n"
                     f"{pull_request_context}\n\n"
+
+                    "Workflow Runs:\n"
+                    f"{workflow_context}\n\n"
 
                     "GitHub Best Practices:\n"
                     f"{github_context}\n\n"
