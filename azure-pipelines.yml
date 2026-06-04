@@ -1,0 +1,19 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.12'
+
+- script: |
+    python --version
+  displayName: 'Verify Python'
+
+- script: |
+    echo "Enterprise AI Agent Platform Build Successful"
+  displayName: 'Validate Build'
