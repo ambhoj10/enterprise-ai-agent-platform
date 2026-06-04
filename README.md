@@ -4,7 +4,7 @@
 
 Enterprise AI Agent Platform is a multi-agent AI system built using FastAPI and Azure OpenAI.
 
-The platform routes user requests to specialized AI agents that provide domain-specific responses.
+The platform routes user requests to specialized AI agents that provide domain-specific responses. Agents can leverage enterprise tools and retrieval workflows to generate contextual and actionable responses.
 
 Current agents include:
 
@@ -12,8 +12,6 @@ Current agents include:
 * CloudOps Agent
 * DevOps Agent
 * Documentation Agent
-
-The platform also supports tool integration and retrieval workflows.
 
 ---
 
@@ -52,7 +50,7 @@ Azure OpenAI (GPT-4o-mini)
 
 ↓
 
-Response
+AI Response
 
 ---
 
@@ -60,15 +58,15 @@ Response
 
 ### Multi-Agent Routing
 
-Automatically routes requests to the most appropriate agent.
+Automatically routes requests to the most appropriate AI agent based on user intent.
 
 ### Azure OpenAI Integration
 
-Uses Azure OpenAI GPT-4o-mini for AI-powered responses.
+Uses Azure OpenAI GPT-4o-mini for enterprise-grade AI responses.
 
 ### Tool-Augmented Agents
 
-Agents can use tools to enrich responses.
+Agents can access tools and external systems to enrich responses.
 
 Implemented tools:
 
@@ -80,6 +78,18 @@ Implemented tools:
 
 Knowledge Agent can retrieve contextual information before generating responses.
 
+### GitHub Repository Intelligence
+
+The DevOps Agent can retrieve live repository information directly from GitHub.
+
+Capabilities:
+
+* Repository Metadata
+* Open Issues Analysis
+* Pull Request Analysis
+* GitHub Best Practices
+* AI-Powered DevOps Recommendations
+
 ### Production API Design
 
 REST API built with FastAPI.
@@ -90,19 +100,53 @@ POST /agent/chat
 
 Example Request:
 
+```json
 {
-"question": "How do I optimize Azure costs?"
+  "question": "Summarize my GitHub repository"
 }
+```
+
+---
+
+## Example Questions
+
+### Knowledge Agent
+
+* What is Retrieval Augmented Generation?
+* Explain vector databases.
+* What are AI agent architectures?
+
+### CloudOps Agent
+
+* How do I optimize Azure costs?
+* Explain Azure monitoring best practices.
+* How should I design a scalable cloud architecture?
+
+### DevOps Agent
+
+* Summarize my GitHub repository.
+* Show open issues in my repository.
+* What pull requests are currently open?
+* Give me DevOps recommendations for my repository.
+
+### Documentation Agent
+
+* Create a deployment runbook.
+* Generate architecture documentation.
+* Create an operational procedure.
 
 ---
 
 ## Project Structure
 
+```text
 agents/
 
 api/
 
 app/
+
+docs/
 
 models/
 
@@ -113,6 +157,7 @@ services/
 services/tools/
 
 tests/
+```
 
 ---
 
@@ -122,29 +167,65 @@ tests/
 * FastAPI
 * Azure OpenAI
 * GPT-4o-mini
+* Requests
 * Pydantic
 * REST APIs
 
 ---
 
-## Roadmap
+## Current Status
 
 ### Completed
 
-* Multi-Agent Platform
+#### Week 13 – Multi-Agent Platform
+
+* Agent Router
+* Knowledge Agent
+* CloudOps Agent
+* DevOps Agent
+* Documentation Agent
+* FastAPI Gateway
 * Azure OpenAI Integration
-* Tool Layer
+
+#### Week 14 – Tool Layer
+
+* GitHub Tool
+* Azure DevOps Tool
+* Search Tool
 * Tool Service
 * Retrieval Workflow
 
-### Planned
+#### Week 15 – GitHub API Integration
 
-* GitHub API Integration
+* GitHub Personal Access Token Integration
+* GitHub Service
+* Repository Metadata Retrieval
+* Open Issues Retrieval
+* Pull Request Retrieval
+* GitHub Tool Integration
+* DevOps Agent Integration
+* Live Repository Intelligence
+
+---
+
+## Roadmap
+
+### Next Milestones
+
+* GitHub Actions Workflow Intelligence
 * Azure DevOps API Integration
-* Azure AI Search RAG
+* Azure AI Search Integration
+* Retrieval Augmented Generation (RAG)
 * Agent Orchestration
 * Conversation Memory
 * Observability
+* Production Monitoring
+
+---
+
+## Version
+
+Current Version: **1.1**
 
 ---
 

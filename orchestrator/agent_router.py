@@ -7,7 +7,52 @@ class AgentRouter:
 
         question = question.lower()
 
-        # Documentation first
+        # DevOps Agent
+
+        if any(
+            keyword in question
+            for keyword in [
+                "pipeline",
+                "deployment",
+                "github",
+                "repository",
+                "repo",
+                "issue",
+                "issues",
+                "pull request",
+                "pull requests",
+                "workflow",
+                "workflows",
+                "actions",
+                "devops",
+                "ci/cd",
+                "build"
+            ]
+        ):
+            return "devops"
+
+        # CloudOps Agent
+
+        if any(
+            keyword in question
+            for keyword in [
+                "azure",
+                "cloud",
+                "monitoring",
+                "cost",
+                "cost optimization",
+                "infrastructure",
+                "app service",
+                "aks",
+                "kubernetes",
+                "virtual machine",
+                "vm"
+            ]
+        ):
+            return "cloudops"
+
+        # Documentation Agent
+
         if any(
             keyword in question
             for keyword in [
@@ -17,36 +62,12 @@ class AgentRouter:
                 "architecture",
                 "design",
                 "sop",
-                "procedure"
+                "procedure",
+                "guide"
             ]
         ):
             return "documentation"
 
-        # DevOps second
-        if any(
-            keyword in question
-            for keyword in [
-                "pipeline",
-                "deployment",
-                "github",
-                "devops",
-                "ci/cd",
-                "build"
-            ]
-        ):
-            return "devops"
-
-        # CloudOps third
-        if any(
-            keyword in question
-            for keyword in [
-                "azure",
-                "cloud",
-                "monitoring",
-                "cost",
-                "infrastructure"
-            ]
-        ):
-            return "cloudops"
+        # Default
 
         return "knowledge"

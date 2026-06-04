@@ -28,6 +28,24 @@ class ToolService:
             repository_name
         )
 
+    def get_open_issues(
+        self,
+        repository_name
+    ):
+
+        return self.github_tool.get_open_issues(
+            repository_name
+        )
+
+    def get_pull_requests(
+        self,
+        repository_name
+    ):
+
+        return self.github_tool.get_pull_requests(
+            repository_name
+        )
+
     # Azure DevOps
 
     def get_azure_devops_context(self):
@@ -36,7 +54,7 @@ class ToolService:
             self.azure_devops_tool.get_best_practices()
         )
 
-    # Search / Retrieval
+    # Search
 
     def search_knowledge(
         self,

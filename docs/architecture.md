@@ -12,54 +12,44 @@ The architecture is designed to be modular, extensible, and production-ready, al
 
 # Architecture Diagram
 
-```text
 User
- │
- ▼
+
+↓
 
 POST /agent/chat
 
- │
- ▼
+↓
 
 FastAPI API Gateway
 
- │
- ▼
+↓
 
 Agent Router
 
- │
- ├── Knowledge Agent
- │
- ├── CloudOps Agent
- │
- ├── DevOps Agent
- │
- └── Documentation Agent
+↓
 
- │
- ▼
+Selected Agent
+
+* Knowledge Agent
+* CloudOps Agent
+* DevOps Agent
+* Documentation Agent
+
+↓
 
 Tool Service
 
- │
- ├── GitHub Tool
- │
- ├── Azure DevOps Tool
- │
- └── Search Tool
+* GitHub Tool
+* Azure DevOps Tool
+* Search Tool
 
- │
- ▼
+↓
 
 Azure OpenAI (GPT-4o-mini)
 
- │
- ▼
+↓
 
 AI Response
-```
 
 ---
 
@@ -73,7 +63,7 @@ Current routing categories include:
 | ------------------------ | ------------------- |
 | Knowledge Requests       | Knowledge Agent     |
 | Azure / Cloud Operations | CloudOps Agent      |
-| DevOps / CI-CD           | DevOps Agent        |
+| DevOps / GitHub / CI-CD  | DevOps Agent        |
 | Documentation / Runbooks | Documentation Agent |
 
 The router serves as the entry point for all agent selection decisions.
@@ -119,6 +109,9 @@ Capabilities:
 Purpose:
 
 * CI/CD guidance
+* GitHub repository analysis
+* GitHub issues analysis
+* Pull request analysis
 * GitHub Actions recommendations
 * Azure DevOps pipeline best practices
 * Deployment automation guidance
@@ -127,7 +120,27 @@ Capabilities:
 
 * Uses GitHub Tool
 * Uses Azure DevOps Tool
-* Generates tool-augmented responses
+* Retrieves live GitHub repository metadata
+* Retrieves open GitHub issues
+* Retrieves open pull requests
+* Generates AI-powered DevOps recommendations
+* Produces tool-augmented responses
+
+Current GitHub Intelligence Features:
+
+* Repository Summary
+* Open Issues Analysis
+* Pull Request Analysis
+* GitHub Best Practices
+* Repository Health Recommendations
+
+Example Questions:
+
+* Summarize my GitHub repository.
+* Show open issues in my repository.
+* What pull requests are currently open?
+* What work is pending in my project?
+* Give me DevOps recommendations for my repository.
 
 ---
 
@@ -143,7 +156,8 @@ Purpose:
 Capabilities:
 
 * Produces structured enterprise documentation
-* Generates implementation guides and operational documents
+* Generates implementation guides
+* Generates operational documents
 
 ---
 
@@ -163,9 +177,10 @@ Current tools:
 
 Provides:
 
-* GitHub best practices
-* CI/CD recommendations
-* Repository workflow guidance
+* Repository Summary
+* Open Issues Summary
+* Pull Request Summary
+* GitHub Best Practices
 
 ---
 
@@ -186,6 +201,90 @@ Provides:
 * Retrieval-based context
 * Knowledge lookups
 * Foundation for future RAG workflows
+
+---
+
+# GitHub Integration Architecture
+
+The platform integrates directly with the GitHub REST API to provide repository intelligence to AI agents.
+
+## Components
+
+### GitHub Service
+
+Responsible for:
+
+* Repository Metadata Retrieval
+* Open Issues Retrieval
+* Pull Request Retrieval
+
+### GitHub Tool
+
+Provides an abstraction layer between AI agents and GitHub services.
+
+Capabilities:
+
+* Repository Summary
+* Open Issues Summary
+* Pull Request Summary
+* GitHub Best Practices
+
+### DevOps Agent
+
+Consumes:
+
+* Repository Metadata
+* Open Issues
+* Pull Requests
+* GitHub Best Practices
+* Azure DevOps Best Practices
+
+and uses Azure OpenAI to generate contextual DevOps recommendations.
+
+## GitHub Request Flow
+
+User Question
+
+↓
+
+Agent Router
+
+↓
+
+DevOps Agent
+
+↓
+
+GitHub Tool
+
+↓
+
+GitHub Service
+
+↓
+
+GitHub REST API
+
+↓
+
+Repository Data
+
+↓
+
+Azure OpenAI
+
+↓
+
+Response
+
+## Current GitHub Capabilities
+
+* Repository Summary
+* Open Issues Analysis
+* Pull Request Analysis
+* AI-Powered DevOps Recommendations
+
+This establishes the foundation for future GitHub Actions workflow intelligence and CI/CD observability.
 
 ---
 
@@ -213,9 +312,7 @@ Azure OpenAI then generates the final response.
 
 1. User submits a request to:
 
-```http
 POST /agent/chat
-```
 
 2. FastAPI receives the request.
 
@@ -241,9 +338,9 @@ POST /agent/chat
 
 # Future Enhancements
 
-## Real GitHub API Integration
+## GitHub Actions Workflow Intelligence
 
-Replace static GitHub Tool content with live GitHub API calls.
+Retrieve workflow runs and CI/CD status directly from GitHub Actions.
 
 ---
 
@@ -255,7 +352,7 @@ Retrieve real pipeline and deployment information.
 
 ## Azure AI Search Integration
 
-Replace mock Search Tool with Azure AI Search for enterprise retrieval.
+Replace mock Search Tool with Azure AI Search.
 
 ---
 
@@ -300,8 +397,10 @@ Integrate:
 * FastAPI
 * Azure OpenAI
 * GPT-4o-mini
+* Requests
 * Pydantic
 * REST APIs
+* GitHub REST API
 * Modular Agent Architecture
 * Tool Service Pattern
 
@@ -309,12 +408,15 @@ Integrate:
 
 # Current Platform Version
 
-Version: 1.0
+Version: 1.1
 
 Status:
 
 * Multi-Agent Platform Complete
 * Tool Layer Complete
 * Retrieval Workflow Complete
-* Ready for Real API Integrations
+* GitHub API Integration Complete
+* Repository Intelligence Complete
+* Issue Intelligence Complete
+* Ready for Workflow Intelligence
 
