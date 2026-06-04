@@ -1,0 +1,39 @@
+from services.openai_service import OpenAIService
+from services.tool_service import ToolService
+
+
+class DevOpsAgent:
+
+    def __init__(self):
+
+        self.openai_service = OpenAIService()
+        self.tool_service = ToolService()
+
+    def execute(
+        self,
+        question
+    ):
+
+        github_context = (
+            self.tool_service.get_github_context()
+        )
+
+        azure_devops_context = (
+            self.tool_service.get_azure_devops_context()
+        )
+
+        return {
+            "agent": "DevOps Agent",
+            "response": self.openai_service.generate_response(
+                system_prompt=(
+                    "You are a senior DevOps engineer.\n\n"
+
+                    "GitHub Best Practices:\n"
+                    f"{github_context}\n\n"
+
+                    "Azure DevOps Best Practices:\n"
+                    f"{azure_devops_context}"
+                ),
+                question=question
+            )
+        }
