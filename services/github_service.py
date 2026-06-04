@@ -65,3 +65,19 @@ class GitHubService:
         response.raise_for_status()
 
         return response.json()
+
+    def get_workflow_runs(
+        self,
+        repository_name
+    ):
+
+        response = requests.get(
+            f"{self.BASE_URL}/repos/"
+            f"{settings.GITHUB_OWNER}/"
+            f"{repository_name}/actions/runs",
+            headers=self._headers()
+        )
+
+        response.raise_for_status()
+
+        return response.json()

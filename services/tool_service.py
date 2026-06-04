@@ -46,6 +46,15 @@ class ToolService:
             repository_name
         )
 
+    def get_workflow_runs(
+        self,
+        repository_name
+    ):
+
+        return self.github_tool.get_workflow_runs(
+            repository_name
+        )
+
     # Azure DevOps
 
     def get_azure_devops_context(self):
@@ -54,7 +63,7 @@ class ToolService:
             self.azure_devops_tool.get_best_practices()
         )
 
-    # Search
+    # Search / Retrieval
 
     def search_knowledge(
         self,

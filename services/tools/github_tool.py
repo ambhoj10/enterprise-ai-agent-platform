@@ -71,3 +71,31 @@ class GitHubTool:
             pr["title"]
             for pr in pull_requests[:5]
         )
+
+    def get_workflow_runs(
+        self,
+        repository_name
+    ):
+
+        workflows = (
+            self.github_service.get_workflow_runs(
+                repository_name
+            )
+        )
+
+        runs = workflows.get(
+            "workflow_runs",
+            []
+        )
+
+        if not runs:
+            return "No workflow runs found."
+
+        return "\n".join(
+            (
+                f"{run['name']} - "
+                f"{run['status']} - "
+                f"{run['conclusion']}"
+            )
+            for run in runs[:5]
+        )
