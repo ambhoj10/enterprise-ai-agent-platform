@@ -22,11 +22,20 @@ class DevOpsAgent:
             self.tool_service.get_azure_devops_context()
         )
 
+        repository_context = (
+            self.tool_service.get_repository_summary(
+                "enterprise-ai-agent-platform"
+            )
+        )
+
         return {
             "agent": "DevOps Agent",
             "response": self.openai_service.generate_response(
                 system_prompt=(
                     "You are a senior DevOps engineer.\n\n"
+
+                    "Repository Information:\n"
+                    f"{repository_context}\n\n"
 
                     "GitHub Best Practices:\n"
                     f"{github_context}\n\n"

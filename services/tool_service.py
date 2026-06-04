@@ -11,17 +11,32 @@ class ToolService:
         self.azure_devops_tool = AzureDevOpsTool()
         self.search_tool = SearchTool()
 
+    # GitHub
+
     def get_github_context(self):
 
         return "\n".join(
             self.github_tool.get_best_practices()
         )
 
+    def get_repository_summary(
+        self,
+        repository_name
+    ):
+
+        return self.github_tool.get_repository_summary(
+            repository_name
+        )
+
+    # Azure DevOps
+
     def get_azure_devops_context(self):
 
         return "\n".join(
             self.azure_devops_tool.get_best_practices()
         )
+
+    # Search / Retrieval
 
     def search_knowledge(
         self,
