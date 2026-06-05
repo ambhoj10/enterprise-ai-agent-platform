@@ -1,32 +1,35 @@
+from services.ai_search_service import (
+    AISearchService
+)
+
+
 class SearchTool:
+
+    def __init__(self):
+
+        self.ai_search_service = (
+            AISearchService()
+        )
 
     def search_knowledge_base(
         self,
         query
     ):
 
-        knowledge = {
-            "rag": (
-                "Retrieval Augmented Generation combines "
-                "retrieval systems with LLMs to provide "
-                "grounded responses."
-            ),
-            "azure ai search": (
-                "Azure AI Search is Microsoft's enterprise "
-                "search and retrieval platform."
-            ),
-            "agent": (
-                "An AI agent is a system that can reason, "
-                "use tools, and perform tasks."
+        results = (
+            self.ai_search_service
+            .search_documents(query)
+        )
+
+        if not results:
+
+            return "No knowledge found."
+
+        return "\n\n".join(
+            (
+                f"Title: {result['title']}\n"
+                f"Source: {result['source']}\n"
+                f"Content:\n{result['content']}"
             )
-        }
-
-        query = query.lower()
-
-        for key, value in knowledge.items():
-
-            if key in query:
-
-                return value
-
-        return "No knowledge found."
+            for result in results[:3]
+        )

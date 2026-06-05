@@ -99,6 +99,7 @@ class AISearchService:
         return [
             {
                 "title": doc["title"],
+                "content": doc["content"],
                 "source": doc["source"]
             }
             for doc in results
