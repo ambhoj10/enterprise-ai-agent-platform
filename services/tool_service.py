@@ -63,6 +63,18 @@ class ToolService:
             self.azure_devops_tool.get_best_practices()
         )
 
+    def get_pipeline_summary(self):
+
+        return (
+            self.azure_devops_tool.get_pipeline_summary()
+        )
+
+    def get_build_summary(self):
+
+        return (
+            self.azure_devops_tool.get_build_summary()
+        )
+
     # Search / Retrieval
 
     def search_knowledge(

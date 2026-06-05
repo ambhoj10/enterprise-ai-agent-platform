@@ -46,6 +46,14 @@ class DevOpsAgent:
             )
         )
 
+        pipeline_context = (
+            self.tool_service.get_pipeline_summary()
+        )
+
+        build_context = (
+            self.tool_service.get_build_summary()
+        )
+
         return {
             "agent": "DevOps Agent",
             "response": self.openai_service.generate_response(
@@ -61,8 +69,14 @@ class DevOpsAgent:
                     "Open Pull Requests:\n"
                     f"{pull_request_context}\n\n"
 
-                    "Workflow Runs:\n"
+                    "GitHub Workflow Runs:\n"
                     f"{workflow_context}\n\n"
+
+                    "Azure DevOps Pipelines:\n"
+                    f"{pipeline_context}\n\n"
+
+                    "Azure DevOps Builds:\n"
+                    f"{build_context}\n\n"
 
                     "GitHub Best Practices:\n"
                     f"{github_context}\n\n"
