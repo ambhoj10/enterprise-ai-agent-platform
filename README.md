@@ -25,56 +25,54 @@ Azure Container Apps
 - Dockerized Deployment
 - Azure Container Apps Hosting
 
-# Enterprise AI Agent Platform Architecture
-
 ```mermaid
 flowchart TD
 
-    A[End Users<br/>Web UI | API Clients]
+    A["End Users<br/>Web UI and API Clients"]
 
-    A -->|HTTPS| B[Azure Container Apps<br/>Enterprise AI Agent Platform<br/>FastAPI]
+    A --> B["Azure Container Apps<br/>Enterprise AI Agent Platform<br/>FastAPI"]
 
-    B --> C[Authentication Layer<br/>JWT + RBAC<br/>Admin | Developer | Viewer]
+    B --> C["Authentication Layer<br/>JWT Authentication<br/>RBAC"]
 
-    C --> D[Planner Agent<br/>Intent Detection<br/>Agent Selection]
+    C --> D["Planner Agent<br/>Intent Detection<br/>Agent Selection"]
 
-    D --> E[Multi-Agent Executor]
+    D --> E["Multi-Agent Executor"]
 
-    E --> F[Knowledge Agent]
-    E --> G[DevOps Agent]
-    E --> H[CloudOps Agent]
-    E --> I[Documentation Agent]
+    E --> F["Knowledge Agent"]
+    E --> G["DevOps Agent"]
+    E --> H["CloudOps Agent"]
+    E --> I["Documentation Agent"]
 
-    F --> J[Azure AI Search<br/>RAG<br/>Vector Search<br/>Embeddings]
+    F --> J["Azure AI Search<br/>RAG<br/>Vector Search<br/>Embeddings"]
 
-    G --> K[GitHub API<br/>Repositories<br/>Pull Requests<br/>Issues]
+    G --> K["GitHub API<br/>Repositories<br/>Pull Requests<br/>Issues"]
 
-    H --> L[Azure Cloud Guidance<br/>Architecture<br/>Reliability<br/>Cost Control]
+    H --> L["Azure Cloud Guidance<br/>Architecture<br/>Reliability<br/>Cost Optimization"]
 
-    I --> M[Documentation Generation]
+    I --> M["Documentation Generation"]
 
-    J --> N[Response Synthesizer]
+    J --> N["Response Synthesizer"]
     K --> N
     L --> N
     M --> N
 
-    N --> O[Azure OpenAI<br/>GPT-4o-mini<br/>Embedding Model]
+    N --> O["Azure OpenAI<br/>GPT-4o-mini<br/>Embeddings"]
 
-    O --> P[Persistence & Observability<br/>SQLite<br/>Memory<br/>Logs<br/>Metrics<br/>Cost Tracking]
+    O --> P["Persistence and Observability<br/>SQLite<br/>Memory<br/>Logs<br/>Metrics<br/>Cost Tracking"]
 
-    subgraph External Services
-        Q[Azure OpenAI]
-        R[Azure AI Search]
-        S[GitHub]
-        T[Azure DevOps]
+    subgraph External_Services
+        Q["Azure OpenAI"]
+        R["Azure AI Search"]
+        S["GitHub"]
+        T["Azure DevOps"]
     end
 
-    subgraph CI/CD Pipeline
-        U[GitHub Repository]
-        V[GitHub Actions]
-        W[Docker Build]
-        X[Docker Hub]
-        Y[Azure Container Apps]
+    subgraph CI_CD_Pipeline
+        U["GitHub Repository"]
+        V["GitHub Actions"]
+        W["Docker Build"]
+        X["Docker Hub"]
+        Y["Azure Container Apps"]
 
         U --> V
         V --> W
@@ -82,9 +80,6 @@ flowchart TD
         X --> Y
     end
 ```
-
-
-
 ## Architecture Overview
 
 The platform follows a multi-agent architecture where a Planner Agent analyzes user intent and dynamically selects one or more specialized agents.
