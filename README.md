@@ -1,235 +1,258 @@
 # Enterprise AI Agent Platform
 
-## Overview
+An enterprise-grade multi-agent AI platform built on Azure OpenAI, Azure AI Search, FastAPI, and Azure Container Apps.
 
-Enterprise AI Agent Platform is a multi-agent AI system built using FastAPI and Azure OpenAI.
+The platform enables intelligent orchestration of specialized AI agents for Knowledge Management, DevOps Operations, Cloud Architecture, and Documentation Generation.
 
-The platform routes user requests to specialized AI agents that provide domain-specific responses. Agents can leverage enterprise tools and retrieval workflows to generate contextual and actionable responses.
+## Live Deployment
 
-Current agents include:
+Azure Container Apps
 
-* Knowledge Agent
-* CloudOps Agent
-* DevOps Agent
-* Documentation Agent
+## Key Capabilities
 
----
+- Multi-Agent Architecture
+- Retrieval-Augmented Generation (RAG)
+- Azure OpenAI Integration
+- Azure AI Search Vector Search
+- GitHub Integration
+- Azure DevOps Integration
+- JWT Authentication
+- Role-Based Access Control (RBAC)
+- Conversation Memory
+- Execution Logging
+- Metrics Dashboard
+- Cost Tracking
+- Dockerized Deployment
+- Azure Container Apps Hosting
 
-## Architecture
+# Enterprise AI Agent Platform Architecture
 
-User Request
+```mermaid
+flowchart TD
 
-↓
+    A[End Users<br/>Web UI | API Clients]
 
-FastAPI API Gateway
+    A -->|HTTPS| B[Azure Container Apps<br/>Enterprise AI Agent Platform<br/>FastAPI]
 
-↓
+    B --> C[Authentication Layer<br/>JWT + RBAC<br/>Admin | Developer | Viewer]
 
-Agent Router
+    C --> D[Planner Agent<br/>Intent Detection<br/>Agent Selection]
 
-↓
+    D --> E[Multi-Agent Executor]
 
-Selected Agent
+    E --> F[Knowledge Agent]
+    E --> G[DevOps Agent]
+    E --> H[CloudOps Agent]
+    E --> I[Documentation Agent]
 
-* Knowledge Agent
-* CloudOps Agent
-* DevOps Agent
-* Documentation Agent
+    F --> J[Azure AI Search<br/>RAG<br/>Vector Search<br/>Embeddings]
 
-↓
+    G --> K[GitHub API<br/>Repositories<br/>Pull Requests<br/>Issues]
 
-Tool Service
+    H --> L[Azure Cloud Guidance<br/>Architecture<br/>Reliability<br/>Cost Control]
 
-* GitHub Tool
-* Azure DevOps Tool
-* Search Tool
+    I --> M[Documentation Generation]
 
-↓
+    J --> N[Response Synthesizer]
+    K --> N
+    L --> N
+    M --> N
 
-Azure OpenAI (GPT-4o-mini)
+    N --> O[Azure OpenAI<br/>GPT-4o-mini<br/>Embedding Model]
 
-↓
+    O --> P[Persistence & Observability<br/>SQLite<br/>Memory<br/>Logs<br/>Metrics<br/>Cost Tracking]
 
-AI Response
+    subgraph External Services
+        Q[Azure OpenAI]
+        R[Azure AI Search]
+        S[GitHub]
+        T[Azure DevOps]
+    end
 
----
+    subgraph CI/CD Pipeline
+        U[GitHub Repository]
+        V[GitHub Actions]
+        W[Docker Build]
+        X[Docker Hub]
+        Y[Azure Container Apps]
 
-## Features
-
-### Multi-Agent Routing
-
-Automatically routes requests to the most appropriate AI agent based on user intent.
-
-### Azure OpenAI Integration
-
-Uses Azure OpenAI GPT-4o-mini for enterprise-grade AI responses.
-
-### Tool-Augmented Agents
-
-Agents can access tools and external systems to enrich responses.
-
-Implemented tools:
-
-* GitHub Tool
-* Azure DevOps Tool
-* Search Tool
-
-### Retrieval Workflow
-
-Knowledge Agent can retrieve contextual information before generating responses.
-
-### GitHub Repository Intelligence
-
-The DevOps Agent can retrieve live repository information directly from GitHub.
-
-Capabilities:
-
-* Repository Metadata
-* Open Issues Analysis
-* Pull Request Analysis
-* GitHub Best Practices
-* AI-Powered DevOps Recommendations
-
-### Production API Design
-
-REST API built with FastAPI.
-
-Endpoint:
-
-POST /agent/chat
-
-Example Request:
-
-```json
-{
-  "question": "Summarize my GitHub repository"
-}
+        U --> V
+        V --> W
+        W --> X
+        X --> Y
+    end
 ```
 
----
 
-## Example Questions
+
+## Architecture Overview
+
+The platform follows a multi-agent architecture where a Planner Agent analyzes user intent and dynamically selects one or more specialized agents.
+
+The selected agents execute independently and the Response Synthesizer consolidates outputs into a final enterprise response.
+
+Core architectural components:
+
+- Planner Agent
+- Multi-Agent Executor
+- Knowledge Agent
+- DevOps Agent
+- CloudOps Agent
+- Documentation Agent
+- Response Synthesizer
+- Azure OpenAI
+- Azure AI Search
+
+## Agent Architecture
 
 ### Knowledge Agent
 
-* What is Retrieval Augmented Generation?
-* Explain vector databases.
-* What are AI agent architectures?
+Provides enterprise knowledge retrieval using:
 
-### CloudOps Agent
-
-* How do I optimize Azure costs?
-* Explain Azure monitoring best practices.
-* How should I design a scalable cloud architecture?
+- Azure AI Search
+- Vector Search
+- Embeddings
+- RAG
 
 ### DevOps Agent
 
-* Summarize my GitHub repository.
-* Show open issues in my repository.
-* What pull requests are currently open?
-* Give me DevOps recommendations for my repository.
+Provides:
+
+- GitHub Repository Insights
+- Pull Request Analysis
+- Issue Tracking
+- Workflow Monitoring
+
+### CloudOps Agent
+
+Provides:
+
+- Azure Architecture Guidance
+- Reliability Recommendations
+- Cost Optimization
+- Cloud Operations Support
 
 ### Documentation Agent
 
-* Create a deployment runbook.
-* Generate architecture documentation.
-* Create an operational procedure.
+Provides:
 
----
+- Runbooks
+- SOPs
+- Architecture Documents
+- Operational Guides
 
-## Project Structure
+## Retrieval-Augmented Generation (RAG)
 
-```text
-agents/
+The platform implements enterprise RAG using:
 
-api/
+### Document Processing
 
-app/
+- Document Upload
+- Automatic Chunking
+- Embedding Generation
 
-docs/
+### Vector Search
 
-models/
+- Azure AI Search
+- Semantic Search
+- Hybrid Search
 
-orchestrator/
+### Response Generation
 
-services/
+Retrieved context is combined with Azure OpenAI prompts to generate grounded responses.
 
-services/tools/
+## Security
 
-tests/
-```
+### Authentication
 
----
+JWT Authentication
 
-## Technology Stack
+### Authorization
 
-* Python
-* FastAPI
-* Azure OpenAI
-* GPT-4o-mini
-* Requests
-* Pydantic
-* REST APIs
+Role-Based Access Control (RBAC)
 
----
+Roles:
 
-## Current Status
+- Admin
+- Developer
+- Viewer
 
-### Completed
+### Protected Endpoints
 
-#### Week 13 – Multi-Agent Platform
+- /orchestrator/chat
+- /orchestrator/logs
+- /orchestrator/metrics
 
-* Agent Router
-* Knowledge Agent
-* CloudOps Agent
-* DevOps Agent
-* Documentation Agent
-* FastAPI Gateway
-* Azure OpenAI Integration
+## Observability
 
-#### Week 14 – Tool Layer
+### Execution Logging
 
-* GitHub Tool
-* Azure DevOps Tool
-* Search Tool
-* Tool Service
-* Retrieval Workflow
+Tracks:
 
-#### Week 15 – GitHub API Integration
+- User
+- Session
+- Agent Selection
+- Token Usage
+- Cost
 
-* GitHub Personal Access Token Integration
-* GitHub Service
-* Repository Metadata Retrieval
-* Open Issues Retrieval
-* Pull Request Retrieval
-* GitHub Tool Integration
-* DevOps Agent Integration
-* Live Repository Intelligence
+### Metrics Dashboard
 
----
+Provides:
+
+- Total Requests
+- Agent Usage
+- User Activity
+- Endpoint Usage
+- Token Consumption
+- Cost Analytics
+
+## Cost Management
+
+The platform estimates Azure OpenAI usage costs.
+
+Metrics tracked:
+
+- Prompt Tokens
+- Completion Tokens
+- Total Tokens
+- Cost Per Request
+- Cost Per User
+
+This enables AI FinOps visibility and governance.
+
+## Deployment
+
+GitHub
+→ GitHub Actions
+→ Docker Build
+→ Docker Hub
+→ Azure Container Apps
+
+Platform Components:
+
+- FastAPI
+- Docker
+- Azure Container Apps
+- Azure OpenAI
+- Azure AI Search
 
 ## Roadmap
 
-### Next Milestones
+### Version 1.1
 
-* GitHub Actions Workflow Intelligence
-* Azure DevOps API Integration
-* Azure AI Search Integration
-* Retrieval Augmented Generation (RAG)
-* Agent Orchestration
-* Conversation Memory
-* Observability
-* Production Monitoring
+- Prompt-to-Action Automation
+- Azure DevOps Pipeline Creation
+- GitHub Issue Creation
+- Pull Request Automation
 
----
+### Version 1.2
 
-## Version
+- Azure SQL Persistence
+- Azure Monitor Integration
+- Distributed Tracing
 
-Current Version: **1.1**
+### Version 2.0
 
----
-
-## Author
-
-Amboj Kumar
-
+- Agent-to-Agent Collaboration
+- Autonomous Workflows
+- AI Platform Operations Center
