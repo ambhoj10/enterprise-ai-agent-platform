@@ -4,6 +4,16 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'agents/**'
+      - 'api/**'
+      - 'app/**'
+      - 'models/**'
+      - 'orchestrator/**'
+      - 'security/**'
+      - 'services/**'
+      - 'requirements.txt'
+      - 'Dockerfile'
 
 jobs:
   deploy-backend:
