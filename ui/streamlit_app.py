@@ -15,7 +15,7 @@ st.set_page_config(
 )
 
 st.title(
-    "Enterprise AI Agent Platform v1.0"
+    "Enterprise AI Agent Platform v1.0 ci/cd test"
 )
 
 # --------------------------------------------------
