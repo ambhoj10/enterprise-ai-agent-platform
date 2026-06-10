@@ -52,6 +52,8 @@ class AgentRouter:
             return "cloudops"
 
         # Documentation Agent
+        # Used for generating documentation,
+        # not for answering architecture questions.
 
         if any(
             keyword in question
@@ -59,11 +61,12 @@ class AgentRouter:
                 "document",
                 "documentation",
                 "runbook",
-                "architecture",
-                "design",
                 "sop",
                 "procedure",
-                "guide"
+                "guide",
+                "generate document",
+                "create document",
+                "write documentation"
             ]
         ):
             return "documentation"

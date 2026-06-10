@@ -20,9 +20,8 @@ class KnowledgeAgent:
             )
         )
 
-        return {
-            "agent": "Knowledge Agent",
-            "response": self.openai_service.generate_response(
+        ai_response = (
+            self.openai_service.generate_response(
                 system_prompt=(
                     "You are an enterprise knowledge assistant.\n\n"
                     "Knowledge Context:\n"
@@ -30,4 +29,22 @@ class KnowledgeAgent:
                 ),
                 question=question
             )
+        )
+
+        return {
+
+            "agent":
+                "Knowledge Agent",
+
+            "response":
+                ai_response["content"],
+
+            "prompt_tokens":
+                ai_response["prompt_tokens"],
+
+            "completion_tokens":
+                ai_response["completion_tokens"],
+
+            "total_tokens":
+                ai_response["total_tokens"]
         }

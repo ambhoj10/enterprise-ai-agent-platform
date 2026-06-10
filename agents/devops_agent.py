@@ -54,9 +54,8 @@ class DevOpsAgent:
             self.tool_service.get_build_summary()
         )
 
-        return {
-            "agent": "DevOps Agent",
-            "response": self.openai_service.generate_response(
+        ai_response = (
+            self.openai_service.generate_response(
                 system_prompt=(
                     "You are a senior DevOps engineer.\n\n"
 
@@ -86,4 +85,22 @@ class DevOpsAgent:
                 ),
                 question=question
             )
+        )
+
+        return {
+
+            "agent":
+                "DevOps Agent",
+
+            "response":
+                ai_response["content"],
+
+            "prompt_tokens":
+                ai_response["prompt_tokens"],
+
+            "completion_tokens":
+                ai_response["completion_tokens"],
+
+            "total_tokens":
+                ai_response["total_tokens"]
         }

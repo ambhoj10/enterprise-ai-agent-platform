@@ -18,7 +18,7 @@ class SearchTool:
 
         results = (
             self.ai_search_service
-            .search_documents(query)
+            .search_hybrid_documents(query)
         )
 
         if not results:

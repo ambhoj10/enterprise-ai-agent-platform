@@ -14,10 +14,22 @@ from azure.search.documents.indexes.models import (
     SearchIndex,
     SimpleField,
     SearchableField,
-    SearchFieldDataType
+    SearchField,
+    SearchFieldDataType,
+    VectorSearch,
+    VectorSearchProfile,
+    HnswAlgorithmConfiguration
+)
+
+from azure.search.documents.models import (
+    VectorizedQuery
 )
 
 from app.config import settings
+
+from services.embedding_service import (
+    EmbeddingService
+)
 
 
 class AISearchService:
@@ -43,6 +55,10 @@ class AISearchService:
             )
         )
 
+        self.embedding_service = (
+            EmbeddingService()
+        )
+
     def create_index(self):
 
         fields = [
@@ -66,12 +82,37 @@ class AISearchService:
             SimpleField(
                 name="source",
                 type=SearchFieldDataType.String
+            ),
+
+            SearchField(
+                name="contentVector",
+                type=SearchFieldDataType.Collection(
+                    SearchFieldDataType.Single
+                ),
+                searchable=True,
+                vector_search_dimensions=1536,
+                vector_search_profile_name="default"
             )
         ]
 
+        vector_search = VectorSearch(
+            algorithms=[
+                HnswAlgorithmConfiguration(
+                    name="hnsw"
+                )
+            ],
+            profiles=[
+                VectorSearchProfile(
+                    name="default",
+                    algorithm_configuration_name="hnsw"
+                )
+            ]
+        )
+
         index = SearchIndex(
             name=settings.AZURE_SEARCH_INDEX,
-            fields=fields
+            fields=fields,
+            vector_search=vector_search
         )
 
         return self.index_client.create_or_update_index(
@@ -87,6 +128,8 @@ class AISearchService:
             documents
         )
 
+    # Keyword Search
+
     def search_documents(
         self,
         query
@@ -94,6 +137,73 @@ class AISearchService:
 
         results = self.search_client.search(
             search_text=query
+        )
+
+        return [
+            {
+                "title": doc["title"],
+                "content": doc["content"],
+                "source": doc["source"]
+            }
+            for doc in results
+        ]
+
+    # Vector Search
+
+    def search_vector_documents(
+        self,
+        query,
+        top_k=5
+    ):
+
+        embedding = (
+            self.embedding_service
+            .generate_embedding(query)
+        )
+
+        vector_query = VectorizedQuery(
+            vector=embedding,
+            k_nearest_neighbors=top_k,
+            fields="contentVector"
+        )
+
+        results = self.search_client.search(
+            search_text=None,
+            vector_queries=[vector_query]
+        )
+
+        return [
+            {
+                "title": doc["title"],
+                "content": doc["content"],
+                "source": doc["source"]
+            }
+            for doc in results
+        ]
+
+    # Hybrid Search
+
+    def search_hybrid_documents(
+        self,
+        query,
+        top_k=5
+    ):
+
+        embedding = (
+            self.embedding_service
+            .generate_embedding(query)
+        )
+
+        vector_query = VectorizedQuery(
+            vector=embedding,
+            k_nearest_neighbors=top_k,
+            fields="contentVector"
+        )
+
+        results = self.search_client.search(
+            search_text=query,
+            vector_queries=[vector_query],
+            top=top_k
         )
 
         return [

@@ -33,4 +33,18 @@ class OpenAIService:
             ]
         )
 
-        return response.choices[0].message.content
+        return {
+
+            "content":
+                response.choices[0]
+                .message.content,
+
+            "prompt_tokens":
+                response.usage.prompt_tokens,
+
+            "completion_tokens":
+                response.usage.completion_tokens,
+
+            "total_tokens":
+                response.usage.total_tokens
+        }
